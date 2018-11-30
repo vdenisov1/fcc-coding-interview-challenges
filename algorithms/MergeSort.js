@@ -26,6 +26,37 @@ Note:
 We are calling this function from behind the scenes; the test array we are using is commented out in the editor. Try 
 logging array to see your sorting algorithm in action!
 */
+function merge(leftArray, rightArray){
+  let i = 0;
+  let j = 0;
+  let sortedArray = [];
+
+  while(i < leftArray.length && j < rightArray.length){
+    let leftElement = leftArray[i];
+    let rightElement = rightArray[j];
+
+    if(leftElement < rightElement){
+      sortedArray.push(leftElement);
+      i++;
+    }else{
+      sortedArray.push(rightElement);
+      j++;
+    }
+  }
+
+  /**
+   * Finish off any elements remaining in one of the arrays.
+   */
+  for (; i < leftArray.length; i++) {
+    sortedArray.push(leftArray[i]);
+  }
+
+  for (; j < rightArray.length; j++) {
+    sortedArray.push(rightArray[j]);
+  }
+
+  return sortedArray;
+}
 
 function mergeSort(array) {
   if(array.length === 1){
@@ -35,12 +66,7 @@ function mergeSort(array) {
   let splitIndex = Math.floor(array.length / 2)
   let leftArray = mergeSort(array.slice(0, splitIndex));
   let rightArray = mergeSort(array.slice(splitIndex));
-  
-  if(leftArray[leftArray.length - 1] < rightArray[0]){
-    return leftArray.concat(rightArray);
-  }else{
-    return rightArray.concat(leftArray);
-  }
+  return merge(leftArray, rightArray);
 }
 
 console.log(mergeSort([1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]));
